@@ -1,42 +1,44 @@
 import React from "react";
-import { FlexContainer, TransportItem, Select, Button } from "../styles/styles";
+import {
+  FlexContainer,
+  TransportSection,
+  CustomButton,
+} from "../styles/styles";
+import TransportBarSection from "./TransportBarSection";
 import { PRESETS } from "../data/data";
-import { usePreset } from "../store/zustand";
-import Shuffle from "../assets/shuffle.svg";
+import { CustomSelect } from "./CustomSelect";
+import Shuffle from "../assets/svg/shuffle.svg";
+import PlayPause from "../assets/svg/PlayPause.svg";
+import { useStore } from "../store/zustand";
+import { Poti } from "./Poti";
 
 export const TransportBar = () => {
-  const selectedPreset = usePreset((state) => state.selectedPreset);
-  const switchPreset = usePreset((state) => state.switchPreset);
+  const bpm = useStore((state) => state.bpm);
+  const setBpm = useStore((state) => state.setBpm);
 
+  console.log(bpm);
   return (
     <>
       <FlexContainer>
-        <TransportItem id="left" style={{ backgroundColor: "red" }}>
-          <Select
-            defaultValue={selectedPreset}
-            onChange={(e) => switchPreset(e.currentTarget.value)}
-          >
-            {PRESETS.map((preset, key) => {
-              return (
-                <option value={preset.name} key={key}>
-                  {preset.name}
-                </option>
-              );
-            })}
-          </Select>
-          <Button>
-            <img src={Shuffle} width={"30px"} height={"30px"} alt="Shuffle" />
-          </Button>
-          {/* Preset, Shuffle, Example etc.  */}
-        </TransportItem>
+        <TransportBarSection>
+          <CustomSelect data={PRESETS} />
+          <CustomButton>
+            <img src={Shuffle} alt="Shuffle" width={50} />
+          </CustomButton>
+          {/* <CustomSelect data={EXAMPLES} /> */}
+        </TransportBarSection>
 
-        <TransportItem id="middle" style={{ backgroundColor: "yellow" }}>
-          Start/Stop, BPM
-        </TransportItem>
+        <TransportSection>
+          {/* Start/Stop, BPM */}
+          <CustomButton>
+            <img src={PlayPause} alt="Play" />
+          </CustomButton>
+          <Poti value={bpm} setValue={setBpm} min={60} max={180} />
+        </TransportSection>
 
-        <TransportItem id="right" style={{ backgroundColor: "green" }}>
-          #Steps, Volume, Swing, Reset
-        </TransportItem>
+        <TransportSection>
+          {/* #Steps, Volume, Swing, Reset */}
+        </TransportSection>
       </FlexContainer>
     </>
   );

@@ -9,11 +9,13 @@ import {
 import { Sequencer } from "./components/Sequencer";
 import { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme } from "./styles/theme";
-import { useTheme } from "./store/zustand";
+import { useStore } from "./store/zustand";
+import Sun from "./assets/image/sun.png"
+import Moon from "./assets/image/moon.png"
 
 const App = () => {
-  const isDarkmode = useTheme((state) => state.isDarkmode);
-  const switchTheme = useTheme((state) => state.switchTheme);
+  const isDarkmode = useStore((state) => state.isDarkmode);
+  const switchTheme = useStore((state) => state.switchTheme);
 
   return (
     <ThemeProvider theme={isDarkmode ? darkTheme : lightTheme}>
@@ -21,7 +23,7 @@ const App = () => {
         <Wrapper>
           <Header>
             <CustomToggle onClick={switchTheme}>
-              <ToggleIcon>{isDarkmode ? "🌞" : "🌚"}</ToggleIcon>
+              <ToggleIcon src={isDarkmode ? Sun : Moon} />
             </CustomToggle>
           </Header>
           <SequencerWrapper>
