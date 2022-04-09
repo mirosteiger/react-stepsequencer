@@ -1,0 +1,68 @@
+import React, { useState } from "react";
+import { useTheme } from "styled-components";
+import {
+  TrackItemWrapper,
+  RoundButton,
+  TrackButtonWrapper,
+  SampleWrapper,
+  SampleLabel,
+} from "../../styles/styles";
+import IconButton from "../misc/IconButton";
+import Shuffle from "../../assets/svg/shuffle.svg";
+import { Poti } from "../misc/Poti";
+import * as Tone from "tone";
+
+export const TrackInfo = ({ name, url }) => {
+  const theme = useTheme();
+  const [isSolo, setSolo] = useState(false);
+  const [isMute, setMute] = useState(false);
+  const [trackVolume, setTrackVolume] = useState(100);
+
+  const player = new Tone.Player(url).toDestination();
+
+  const playSample = async () => {
+    Tone.loaded()
+      .then(() => {
+        console.log(name);
+        player.start();
+      })
+      .catch((err) => console.log(err));
+  };
+  return (
+    <TrackItemWrapper>
+      <TrackButtonWrapper>
+        <RoundButton
+          isActive={isSolo}
+          activeColor={theme.primary}
+          onClick={() => setSolo(!isSolo)}
+        >
+          S
+        </RoundButton>
+        <RoundButton
+          isActive={isMute}
+          activeColor={theme.error}
+          onClick={() => setMute(!isMute)}
+        >
+          M
+        </RoundButton>
+      </TrackButtonWrapper>
+
+      <SampleWrapper>
+        <SampleLabel disabled defaultValue={name} onClick={playSample}>
+          {name}
+        </SampleLabel>
+      </SampleWrapper>
+      <div style={{ display: "flex" }}>
+        <IconButton icon={Shuffle} radius={"30px"} />
+        <Poti
+          value={trackVolume}
+          setValue={setTrackVolume}
+          min={0}
+          max={100}
+          stepSize={1}
+          size={50}
+        />
+      </div>
+    </TrackItemWrapper>
+  );
+};

@@ -1,5 +1,13 @@
-import styled from "styled-components";
+import styled, { keyframes, css } from "styled-components/macro";
 
+export const LoadingContainer = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${(props) => props.theme.background};
+  
+`;
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -24,9 +32,10 @@ export const SequencerWrapper = styled.div`
 `;
 
 export const SequencerCase = styled.div`
-  width: 80%;
-  height: 80%;
+  width: 90%;
+  height: 90%;
   margin: auto;
+  padding: 10px;
   background-color: ${(props) => props.theme.material};
   border-radius: 10px;
   box-shadow: 0 0 0.8em ${(props) => props.theme.shadow1}50;
@@ -35,34 +44,29 @@ export const SequencerCase = styled.div`
 `;
 
 export const TransportBarWrapper = styled.div`
-  height: 8%;
-  padding: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  padding: 0px 40px 10px 40px;
   background-color: ${(props) => props.theme.shadow};
-  /* border-bottom: solid 2px; */
+  border-bottom: solid 2px lightgoldenrodyellow;
 `;
 
 export const TransportSection = styled.div`
   height: 100%;
+  display: flex;
   flex-grow: 1;
-  /* border: 1px solid white; */
-  /* justify-content: flex-start; */
-  /* flex-direction: row; */
+  align-items: center;
+  justify-content: flex-start;
 `;
 
 export const TransportItemWrapper = styled.div`
   height: 100%;
   display: flex;
-  align-content: center;
-  margin: auto;
-  padding-left: 2em;
 `;
 
 export const FlexContainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-content: center;
-  align-items: stretch;
-  flex-direction: row;
   height: 100%;
 `;
 
@@ -91,22 +95,13 @@ export const ToggleIcon = styled.img`
 
 // TODO
 export const CustomButton = styled.button`
-  margin-left: 1em;
-  border-radius: 30%;
-  background-image: ${(props) =>
-    `-webkit-linear-gradient(${props.theme.gradient1} 0%, ${props.theme.gradient2} 100%)`};
-  background-image: ${(props) =>
-    `-linear-gradient(${props.theme.gradient1} 0%, ${props.theme.gradient2} 100%)`};
+  padding: 5px;
+  border-radius: 50%;
+  background-color: ${(props) =>
+    props.active ? props.theme.selected : "transparent"};
   text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.66);
-  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.5),
-    0 2px 2px rgba(0, 0, 0, 0.19);
-  border: solid 1px #6f6f6f;
-  border-bottom: solid 2px #6f6f6f;
-
-  &:active {
-    /*onClick*/
-    background-image: -webkit-linear-gradient(#efefef 0%, #c5c5c5 100%);
-  }
+  border: none;
+  cursor: pointer;
 `;
 
 // TODO
@@ -114,7 +109,7 @@ export const Select = styled.select`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: bold;
   letter-spacing: 4px;
   font-size: 1.1rem;
   padding: 1rem;
@@ -132,6 +127,125 @@ export const Select = styled.select`
 // TODO
 export const Option = styled.option``;
 
-export const Input = styled.input`
+export const SampleLabel = styled.label`
+  margin-left: 0.5em;
+  border: 1px solid white;
+  display: block;
+  padding: 15px;
+  width: 6em;
+  height: 1em;
+  color: white;
+  cursor: pointer;
+`;
+
+export const Main = styled.div`
+  padding: 0px 10px 0px 0px;
+  display: flex;
+  height: 90%;
+`;
+
+export const TrackWrapper = styled.div`
+  display: flex;
+  /* border: 1px solid ${(props) => props.theme.shadow2}; */
+`;
+
+export const TrackItemWrapper = styled.div`
+  display: flex;
+  padding: 5px;
+  align-items: center;
+  margin: 1em;
+  height: 4em;
+  border: 1px solid ${(props) => props.theme.secondary};
+  border-radius: 4px;
+`;
+
+export const TrackButtonWrapper = styled.div`
+  margin: 1em 0.3em 1em 0.5em;
+  display: flex;
+  flex-direction: column;
+  width: 1.5em;
   height: 100%;
+  justify-content: space-around;
+`;
+
+export const RoundButton = styled.button`
+  border-radius: 50%;
+  height: 1.5 em;
+  background-color: ${(props) =>
+    props.isActive ? props.activeColor : "transparent"};
+  color: ${(props) => props.theme.textInverse};
+  border: none;
+  border: 1px solid ${(props) => props.theme.textInverse};
+`;
+
+export const ColorPanel = styled.div`
+  height: 1em;
+  background-color: ${(props) => props.colorCode};
+`;
+
+export const SampleWrapper = styled.div``;
+
+export const SequenceWrapper = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin: 0px 20px 20px;
+  position: relative;
+  overflow-y: scroll;
+`;
+
+export const IndicatorWrapper = styled.div`
+  position: absolute;
+  width: 82%;
+  left: 20.6em;
+  top: 0px;
+  right: 0px;
+  height: 100%;
+  padding: 4px 2px;
+  pointer-events: none;
+`;
+
+export const StepIndicator = styled.div`
+  position: absolute;
+  top: 0px;
+  left: ${(props) => (props.step * 96) / 2}px;
+  width: 93px;
+  height: 100%;
+  background: ${(props) => props.theme.another};
+`;
+
+export const StepLineWrapper = styled.div`
+  display: flex;
+  padding: 5px;
+  align-items: center;
+  margin: 1em;
+  height: 4em;
+  border: 1px solid ${(props) => props.theme.secondary};
+  border-radius: 4px;
+`;
+
+export const StepButton = styled.button`
+  flex: 1;
+  background: ${(props) =>
+    props.offsetColor ? props.theme.shadow1 : props.theme.secondary};
+  opacity: ${(props) => (props.on === 1 ? 1 : 0.35)};
+  border-radius: 2;
+  margin: 2px;
+  ${(props) => props.doubled && flashMixin}
+`;
+
+const flash = keyframes`
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5
+  }
+`;
+
+const flashMixin = css`
+  animation: ${flash} 0.5s linear infinite;
 `;
