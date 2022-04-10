@@ -1,5 +1,6 @@
 import create from "zustand";
 import { persist } from "zustand/middleware";
+import { initialStepState } from "../data/config";
 
 export const useStore = create(
   persist((set) => ({
@@ -22,7 +23,10 @@ export const useStore = create(
     setSteps: (value) => set(() => ({ steps: value })),
     volume: 100,
     setVolume: (value) => set(() => ({ volume: value })),
-    swing: 120,
+    swing: 0,
     setSwing: (value) => set(() => ({ swing: value })),
+
+    stepState: initialStepState,
+    setStepState: (value) => set(() => ({ stepState: value })),
   }))
 );
