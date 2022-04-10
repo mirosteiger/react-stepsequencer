@@ -37,7 +37,6 @@ export const Sequencer = () => {
 
   useEffect(() => {
     Tone.Transport.scheduleRepeat((time) => {
-      console.log(time)
       Object.keys(buffersRef.current).forEach((b) => {
         let targetStep = stepsRef.current[b][currentStepRef.current];
         let targetBuffer = buffersRef.current[b];
@@ -85,7 +84,7 @@ export const Sequencer = () => {
               />
             </Main>
           </SequencerCase>
-          <Colorpalette />
+          {/* <Colorpalette /> */}
         </StepContext.Provider>
       </React.Suspense>
     </>
