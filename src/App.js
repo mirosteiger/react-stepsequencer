@@ -19,6 +19,8 @@ const App = () => {
   const isDarkmode = useStore((state) => state.isDarkmode);
   const switchTheme = useStore((state) => state.switchTheme);
   const loading = useStore((state) => state.loading);
+  const setPlay = useStore((state) => state.setPlay);
+  const play = useStore((state) => state.play);
 
   useEffect(() => {
     window.addEventListener("beforeunload", alertUser);
@@ -26,10 +28,19 @@ const App = () => {
       window.removeEventListener("beforeunload", alertUser);
     };
   }, []);
+  useEffect(() => {
+    window.addEventListener("keydown", handleSpacePress);
+  }, []);
 
   const alertUser = (e) => {
     e.preventDefault();
     e.returnValue = "";
+  };
+
+  const handleSpacePress = (e) => {
+    if (e.key === " ") {
+      setPlay(!play);
+    }
   };
 
   return (
