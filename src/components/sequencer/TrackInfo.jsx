@@ -8,9 +8,9 @@ import {
   SampleLabel,
 } from "../../styles/styles";
 import IconButton from "../misc/IconButton";
-import Shuffle from "../../assets/svg/shuffle.svg";
 import { Poti } from "../misc/Poti";
 import * as Tone from "tone";
+import { IconRandom } from "../icons/Icons";
 
 export const TrackInfo = ({ name, url }) => {
   const theme = useTheme();
@@ -53,7 +53,9 @@ export const TrackInfo = ({ name, url }) => {
         </SampleLabel>
       </SampleWrapper>
       <div style={{ display: "flex" }}>
-        <IconButton icon={Shuffle} radius={"30px"} />
+        <IconButton >
+          <IconRandom color={theme.textInverse} width={"30px"} height={"100%"}/>
+        </IconButton>
         <Poti
           value={trackVolume}
           setValue={setTrackVolume}

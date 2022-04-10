@@ -6,7 +6,6 @@ export const LoadingContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${(props) => props.theme.background};
-  
 `;
 export const Wrapper = styled.div`
   display: flex;
@@ -49,7 +48,7 @@ export const TransportBarWrapper = styled.div`
   align-items: flex-end;
   padding: 0px 40px 10px 40px;
   background-color: ${(props) => props.theme.shadow};
-  border-bottom: solid 2px lightgoldenrodyellow;
+  border-bottom: solid 2px ${(props) => props.theme.shadow};
 `;
 
 export const TransportSection = styled.div`
@@ -97,11 +96,12 @@ export const ToggleIcon = styled.img`
 export const CustomButton = styled.button`
   padding: 5px;
   border-radius: 50%;
-  background-color: ${(props) =>
-    props.active ? props.theme.selected : "transparent"};
-  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.66);
   border: none;
+  background-color: transparent;
+  /* text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.66); */
   cursor: pointer;
+  box-shadow: ${(props) =>
+    props.active ? "inset 0 2px 2px " + props.theme.primary : "none"};
 `;
 
 // TODO
@@ -113,7 +113,7 @@ export const Select = styled.select`
   letter-spacing: 4px;
   font-size: 1.1rem;
   padding: 1rem;
-  background-color: ${(props) => props.theme.button};
+  background-color: ${(props) => props.theme.primary}50;
   transition: 0.3s ease-in-out;
   border: none;
   border-bottom: solid 1px ${(props) => props.theme.shadow};
@@ -129,12 +129,12 @@ export const Option = styled.option``;
 
 export const SampleLabel = styled.label`
   margin-left: 0.5em;
-  border: 1px solid white;
+  border: 1px solid ${(props) => props.theme.textInverse};
   display: block;
   padding: 15px;
   width: 6em;
   height: 1em;
-  color: white;
+  color: ${(props) => props.theme.textInverse};
   cursor: pointer;
 `;
 
@@ -179,6 +179,7 @@ export const RoundButton = styled.button`
 `;
 
 export const ColorPanel = styled.div`
+  color: ${(props) => props.theme.textInverse};
   height: 1em;
   background-color: ${(props) => props.colorCode};
 `;
@@ -227,10 +228,12 @@ export const StepLineWrapper = styled.div`
 export const StepButton = styled.button`
   flex: 1;
   background: ${(props) =>
-    props.offsetColor ? props.theme.shadow1 : props.theme.secondary};
+    props.offsetColor ? props.theme.primary : props.theme.secondary};
   opacity: ${(props) => (props.on === 1 ? 1 : 0.35)};
-  border-radius: 2;
+  border-radius: 5px;
   margin: 2px;
+  color: ${(props) => props.theme.textInverse};
+  box-shadow: 0 0 0.3em ${(props) => props.theme.shadow1};
   ${(props) => props.doubled && flashMixin}
 `;
 
