@@ -35,6 +35,7 @@ export const Poti = ({ name, value, setValue, min, max, stepSize, size, style })
           progressColor={theme.primary}
           knobRadius={6}
           circleWidth={1}
+          circleColor={theme.selected}
           progressWidth={2}
           stepSize={stepSize}
           size={size}
