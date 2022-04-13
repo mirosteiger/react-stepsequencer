@@ -1,8 +1,9 @@
 import React from "react";
 import {
   SequenceWrapper,
-  // IndicatorWrapper,
-  // StepIndicator,
+  IndicatorWrapper,
+  Spacer,
+  TrackItemWrapper,
 } from "../../styles/styles";
 import { bufferResource } from "../utils/bufferResource";
 import Track from "./Track";
@@ -10,16 +11,18 @@ import Track from "./Track";
 const StepSequencer = ({ config, playing, currentStep, setBuffers }) => {
   return (
     <SequenceWrapper>
-      {/* <IndicatorWrapper>
-        {playing && <StepIndicator step={currentStep} />}
-      </IndicatorWrapper> */}
+      <IndicatorWrapper>
+        <Spacer />
+        <div style={{ backgroundColor: "green", flex: "1" }}></div>
+        {/* {playing && <StepIndicator step={currentStep} />} */}
+      </IndicatorWrapper>
       {config.tracks.map((t, i) => {
         return (
           <Track
             key={i}
             name={t}
-            url={config.samples[t]}
-            buffer={bufferResource(config.samples[t])}
+            url={config.urls[t]}
+            buffer={bufferResource(config.urls[t])}
             setBuffers={setBuffers}
           />
         );

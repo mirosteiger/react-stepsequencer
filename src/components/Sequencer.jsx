@@ -3,18 +3,17 @@ import { SequencerCase, Main } from "../styles/styles";
 import { P1 } from "../styles/styles.text";
 import { TransportBar } from "./transport/TransportBar";
 import StepSequencer from "./sequencer/StepSequencer";
-import { Colorpalette } from "./utils/Colorpalette";
+// import { Colorpalette } from "./utils/Colorpalette";
 import { useStore } from "../store/zustand";
 import { TrackConfig, initialStepState } from "../data/config";
 import * as Tone from "tone";
 import StepContext from "../store/StepContext";
+import { loadSamples } from "./utils/loadSamples";
 
-export const Sequencer = () => {
+export const Sequencer = ({ setPlay, play }) => {
   const bpm = useStore((state) => state.bpm);
   const swing = useStore((state) => state.swing);
-  const play = useStore((state) => state.play);
-
-  const setLoading = useStore((state) => state.setLoading);
+  const volume = useStore((state) => state.volume);
 
   const [stepState, setSteps] = useState(initialStepState);
   const [buffers, setBuffers] = useState({});
@@ -32,6 +31,10 @@ export const Sequencer = () => {
   }, [bpm]);
 
   useEffect(() => {
+    Tone.Destination.volume.value = volume;
+  }, [volume]);
+
+  useEffect(() => {
     Tone.Transport.swing = swing / 100;
   }, [swing]);
 
@@ -41,9 +44,9 @@ export const Sequencer = () => {
         let targetStep = stepsRef.current[b][currentStepRef.current];
         let targetBuffer = buffersRef.current[b];
 
-        // if(b ==="Snare") console.log(stepsRef.current[b])
+        console.log(targetStep);
         if (targetStep === 1) {
-          targetBuffer.start(time + 0.05).stop(time+0.25);
+          targetBuffer.start(time + 0.05).stop(time + 0.25);
         }
         if (targetStep === 2) {
           targetBuffer.start(time);
@@ -55,9 +58,8 @@ export const Sequencer = () => {
       setCurrentStepState((step) => {
         return step > 14 ? 0 : step + 1;
       });
-
     }, "16n");
-  }, []);
+  }, [TrackConfig]);
 
   useEffect(() => {
     if (play) {
@@ -68,12 +70,18 @@ export const Sequencer = () => {
     }
   }, [play]);
 
+  useEffect(() => {
+    new Tone.Players(TrackConfig.urls, () => {
+      console.log("loaded all urls");
+    }).toDestination();
+  }, []);
+
   return (
     <>
       <React.Suspense fallback={<P1>loading...</P1>}>
         <StepContext.Provider value={{ state: stepState, setSteps }}>
           <SequencerCase>
-            <TransportBar setSteps={setSteps} />
+            <TransportBar setSteps={setSteps} play={play} setPlay={setPlay} />
             <Main>
               {/* <Tracks config={TrackConfig} /> */}
               <StepSequencer

@@ -5,22 +5,25 @@ import { TrackSteps } from "./TrackSteps";
 import * as Tone from "tone";
 import { useStore } from "../../store/zustand";
 
-const Track = ({ name, url, setBuffers }) => {
+const Track = (props) => {
+  const { name, url, setBuffers, buffer } = props;
   const setLoading = useStore((state) => state.setLoading);
 
+  const loadSample = async () => {
+    // await Tone.loaded();
+
+    const toneBuffer = new Tone.Player(url, () => {
+      setBuffers((buffers) => ({
+        ...buffers,
+        [name]: buffer,
+      }));
+    });
+  };
   useEffect(() => {
-    const player = new Tone.Player(url).toDestination();
-    Tone.loaded()
-      .then(() => {
-        // console.log(name + " loaded");
-        setBuffers((buffers) => ({
-          ...buffers,
-          [name]: player,
-        }));
-      })
-      .catch((err) => console.log(err));
+    loadSample();
+
     setLoading(false);
-  }, []);
+  }, [url]);
 
   return (
     <TrackWrapper>

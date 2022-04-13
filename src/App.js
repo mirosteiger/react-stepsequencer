@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import {
   Wrapper,
   Header,
@@ -19,17 +19,21 @@ const App = () => {
   const isDarkmode = useStore((state) => state.isDarkmode);
   const switchTheme = useStore((state) => state.switchTheme);
   const loading = useStore((state) => state.loading);
-  const setPlay = useStore((state) => state.setPlay);
-  const play = useStore((state) => state.play);
+  const [play, setPlay] = useState(false)
+
+  
+  // useEffect(() => {
+  //   window.addEventListener("beforeunload", alertUser);
+  //   return () => {
+  //     window.removeEventListener("beforeunload", alertUser);
+  //   };
+  // }, []);
 
   useEffect(() => {
-    window.addEventListener("beforeunload", alertUser);
-    return () => {
-      window.removeEventListener("beforeunload", alertUser);
-    };
-  }, []);
-  useEffect(() => {
     window.addEventListener("keydown", handleSpacePress);
+    return () => {
+      window.removeEventListener("keydown", handleSpacePress);
+    };
   }, []);
 
   const alertUser = (e) => {
@@ -37,12 +41,13 @@ const App = () => {
     e.returnValue = "";
   };
 
-  const handleSpacePress = (e) => {
-    if (e.key === " ") {
+  const handleSpacePress = useCallback((event) => {
+    const { keyCode } = event;
+    if (keyCode === " ") {
       setPlay(!play);
     }
-  };
-
+  }, []);
+  
   return (
     <ThemeProvider theme={isDarkmode ? darkTheme : lightTheme}>
       {loading ? (
@@ -58,7 +63,7 @@ const App = () => {
               </CustomToggle>
             </Header>
             <SequencerWrapper>
-              <Sequencer />
+              <Sequencer setPlay={setPlay} play={play}/>
             </SequencerWrapper>
           </Wrapper>
         </div>

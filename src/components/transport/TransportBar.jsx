@@ -10,17 +10,15 @@ import { Poti } from "../misc/Poti";
 import IconButton from "../misc/IconButton";
 import { useTheme } from "styled-components";
 
-export const TransportBar = ({ setSteps }) => {
+export const TransportBar = ({ setSteps, setPlay, play }) => {
   const theme = useTheme();
   const bpm = useStore((state) => state.bpm);
   const volume = useStore((state) => state.volume);
   const swing = useStore((state) => state.swing);
-  const play = useStore((state) => state.play);
 
   const setBpm = useStore((state) => state.setBpm);
   const setVolume = useStore((state) => state.setVolume);
   const setSwing = useStore((state) => state.setSwing);
-  const setPlay = useStore((state) => state.setPlay);
 
   const handleReset = () => {
     if (window.confirm("Wanna reset your Tracks?") === true) {
