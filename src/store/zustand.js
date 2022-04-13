@@ -12,9 +12,6 @@ export const useStore = create(
     loading: false,
     setLoading: (value) => set(() => ({ loading: value })),
 
-    play: false,
-    setPlay: (value) => set(() => ({ play: value })),
-
     selectedPreset: "606",
     switchPreset: () => set((newPreset) => ({ selectedPreset: newPreset })),
     bpm: 120,
