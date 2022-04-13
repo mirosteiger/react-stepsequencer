@@ -2,7 +2,7 @@ export const PRESETS = [{ name: "80s" }];
 
 export const TrackConfig = {
   tracks: ["Kick", "Snare", "HiHat", "Crash", "Percussion", "Tom1", "Tom2"],
-  samples: {
+  urls: {
     Kick: "audio/80s/Kick_20.wav",
     Snare: "audio/80s/Snare_9.wav",
     HiHat: "audio/80s/Hihat_3_closed.wav",
@@ -16,11 +16,11 @@ export const TrackConfig = {
 export const initialStepState = {
   Kick: [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0],
   Snare: [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-  HiHat: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  HiHat: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1],
   Crash: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   Percussion: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  Tom1: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  Tom2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  Tom1: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0],
+  Tom2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
 };
 export const emptyStepState = {
   Kick: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
