@@ -196,14 +196,19 @@ export const SequenceWrapper = styled.div`
 `;
 
 export const IndicatorWrapper = styled.div`
-  position: absolute;
-  width: 82%;
-  left: 20.6em;
+  display: flex;
   top: 0px;
   right: 0px;
-  height: 100%;
   padding: 4px 2px;
   pointer-events: none;
+  border: 2px dashed white;
+`;
+
+export const Spacer = styled.div`
+  display: flex;
+  width: 16%;
+  height: 1px;
+  background-color: red ;
 `;
 
 export const StepIndicator = styled.div`
