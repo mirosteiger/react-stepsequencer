@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/react-stepsequencer/static/css/main.e9bfa95b.css",
-    "main.js": "/react-stepsequencer/static/js/main.3b9a9314.js",
+    "main.js": "/react-stepsequencer/static/js/main.db8a39f9.js",
     "static/media/MavenPro-Medium.ttf": "/react-stepsequencer/static/media/MavenPro-Medium.7772208486ea6c1492f9.ttf",
     "static/media/MavenPro-Bold.ttf": "/react-stepsequencer/static/media/MavenPro-Bold.a66dfd3c0ff9120f1424.ttf",
     "static/media/MavenPro-Regular.ttf": "/react-stepsequencer/static/media/MavenPro-Regular.6dfe1d1523d27edc3e27.ttf",
@@ -11,10 +11,10 @@
     "static/media/minimal.otf": "/react-stepsequencer/static/media/minimal.8420015aee7e2b623731.otf",
     "index.html": "/react-stepsequencer/index.html",
     "main.e9bfa95b.css.map": "/react-stepsequencer/static/css/main.e9bfa95b.css.map",
-    "main.3b9a9314.js.map": "/react-stepsequencer/static/js/main.3b9a9314.js.map"
+    "main.db8a39f9.js.map": "/react-stepsequencer/static/js/main.db8a39f9.js.map"
   },
   "entrypoints": [
     "static/css/main.e9bfa95b.css",
-    "static/js/main.3b9a9314.js"
+    "static/js/main.db8a39f9.js"
   ]
 }
