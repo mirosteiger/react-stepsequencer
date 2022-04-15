@@ -4,27 +4,22 @@ import { useStore } from "../../store/zustand";
 import { SequencerWrapper } from "../../styles/styles";
 import { Sequencer } from "../Sequencer";
 
-export const Transport = ({ player }) => {
+export const Transport = ({ player, channel }) => {
   const bpm = useStore((state) => state.bpm);
   const swing = useStore((state) => state.swing);
   const volume = useStore((state) => state.volume);
 
   const [playing, setPlaying] = useState(false);
 
-  useEffect(() => {
-    Tone.Transport.bpm.value = bpm;
-    // console.log("bpm: ",  Tone.Transport.bpm.value)
-  }, [bpm]);
-
-  useEffect(() => {
-    Tone.getDestination().volume.value = volume;
-    // console.log("vol: ",  Tone.getDestination().volume.value)
-  }, [volume]);
-
-  useEffect(() => {
-    Tone.Transport.swing = swing / 100;
-    // console.log("swing: ",  Tone.Transport.swing)
-  }, [swing]);
+  const checkKeyPress = useCallback(
+    (e) => {
+      if (e.key === " " && e.target === document.body) {
+        e.preventDefault();
+        setPlaying(!playing);
+      }
+    },
+    [playing]
+  );
 
   const toggleTransport = () => {
     if (playing) {
@@ -38,15 +33,21 @@ export const Transport = ({ player }) => {
     console.log(Tone.Transport.state);
   };
 
-  const checkKeyPress = useCallback(
-    (e) => {
-      if (e.key === " " /*&& e.target === document.body */) {
-        e.preventDefault();
-        toggleTransport();
-      }
-    },
-    [playing]
-  );
+  useEffect(() => {
+    Tone.Transport.bpm.value = bpm;
+  }, [bpm]);
+
+  useEffect(() => {
+    Tone.getDestination().volume.value = volume;
+  }, [volume]);
+
+  useEffect(() => {
+    Tone.Transport.swing = swing / 100;
+  }, [swing]);
+
+  useEffect(() => {
+    toggleTransport();
+  }, [playing]);
 
   useEffect(() => {
     window.addEventListener("keydown", checkKeyPress);
@@ -57,7 +58,12 @@ export const Transport = ({ player }) => {
 
   return (
     <SequencerWrapper>
-      <Sequencer setPlay={setPlaying} play={playing} player={player} />
+      <Sequencer
+        setPlay={setPlaying}
+        play={playing}
+        player={player}
+        channel={channel}
+      />
     </SequencerWrapper>
   );
 };

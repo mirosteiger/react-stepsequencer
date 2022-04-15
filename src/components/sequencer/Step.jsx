@@ -9,8 +9,6 @@ const isOffsetColor = (index) =>
 export default React.memo(function Step({ on, index, name, doubled }) {
   const context = useContext(StepContext);
 
-
-
   function toggleStep(e) {
     let shiftEnabled = e.shiftKey === true;
     context.setSteps((state) => {

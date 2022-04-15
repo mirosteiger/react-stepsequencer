@@ -8,7 +8,7 @@ export const LoadingContainer = styled.div`
   align-items: center;
   text-align: center;
   min-height: 100vh;
-  min-width: 100vw ;
+  min-width: 100vw;
 
   background-color: ${(props) => props.theme.background};
 `;
@@ -200,29 +200,17 @@ export const SequenceWrapper = styled.div`
   overflow-y: scroll;
 `;
 
-export const IndicatorWrapper = styled.div`
+export const IndicatorContainer = styled.div`
   display: flex;
-  top: 0px;
-  right: 0px;
-  padding: 4px 2px;
+  padding: 4px 0px;
   pointer-events: none;
-  border: 2px dashed white;
+  /* border: 2px dashed white; */
 `;
 
-export const Spacer = styled.div`
+export const StepIndicatorWrapper = styled.div`
   display: flex;
-  width: 16%;
-  height: 1px;
-  background-color: red;
-`;
-
-export const StepIndicator = styled.div`
-  position: absolute;
-  top: 0px;
-  left: ${(props) => (props.step * 96) / 2}px;
-  width: 93px;
-  height: 100%;
-  background: ${(props) => props.theme.another};
+  /* background: ${(props) => props.theme.another}; */
+  width: 100%;
 `;
 
 export const StepLineWrapper = styled.div`
@@ -245,6 +233,16 @@ export const StepButton = styled.button`
   color: ${(props) => props.theme.textInverse};
   box-shadow: 0 0 0.3em ${(props) => props.theme.shadow1};
   ${(props) => props.doubled && flashMixin}
+`;
+
+export const IndicatorButton = styled.button`
+  flex: 1;
+  background-color: ${(props) => props.theme.error};
+  opacity: ${(props) => (props.active === 1 ? 1 : 0.35)};
+  border-radius: 5px;
+  border: none;
+  margin: 2px;
+  box-shadow: 0 0 0.2em ${(props) => props.theme.shadow1};
 `;
 
 const flash = keyframes`

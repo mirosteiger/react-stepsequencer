@@ -12,14 +12,21 @@ import { Poti } from "../misc/Poti";
 import * as Tone from "tone";
 import { IconRandom } from "../icons/Icons";
 
-export const TrackInfo = ({ name, url }) => {
+export const TrackInfo = ({ name, url, style }) => {
   const theme = useTheme();
   const [isSolo, setSolo] = useState(false);
   const [isMute, setMute] = useState(false);
   const [trackVolume, setTrackVolume] = useState(100);
 
+  const playSample = () => {
+    const player = new Tone.Player(url).toDestination();
+    Tone.loaded().then(() => {
+      player.start();
+    });
+  };
+
   return (
-    <TrackItemWrapper>
+    <TrackItemWrapper style={style}>
       <TrackButtonWrapper>
         <RoundButton
           isActive={isSolo}
@@ -38,13 +45,17 @@ export const TrackInfo = ({ name, url }) => {
       </TrackButtonWrapper>
 
       <SampleWrapper>
-        <SampleLabel disabled defaultValue={name}>
+        <SampleLabel disabled defaultValue={name} onClick={playSample}>
           {name}
         </SampleLabel>
       </SampleWrapper>
       <div style={{ display: "flex" }}>
-        <IconButton >
-          <IconRandom color={theme.textInverse} width={"30px"} height={"100%"}/>
+        <IconButton>
+          <IconRandom
+            color={theme.textInverse}
+            width={"30px"}
+            height={"100%"}
+          />
         </IconButton>
         <Poti
           value={trackVolume}

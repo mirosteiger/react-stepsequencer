@@ -21,7 +21,7 @@ export const TransportBar = ({ setSteps, setPlay, play }) => {
   const setSwing = useStore((state) => state.setSwing);
 
   const handleReset = () => {
-    if (window.confirm("Wanna reset your Tracks?") === true) {
+    if (window.confirm("Wanna reset your Trackpatterns?") === true) {
       setSteps(emptyStepState);
     } else {
       return;

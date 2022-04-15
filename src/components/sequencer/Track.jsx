@@ -3,11 +3,18 @@ import { TrackWrapper } from "../../styles/styles";
 import { TrackInfo } from "./TrackInfo";
 import { TrackSteps } from "./TrackSteps";
 
-const Track = (props) => {
+const Track = ({ name, url, buffer, setBuffers }) => {
+  useEffect(() => {
+    setBuffers((buffers) => ({
+      ...buffers,
+      [name]: buffer,
+    }));
+  }, [buffer]);
+
   return (
     <TrackWrapper>
-      <TrackInfo name={props.name} url={props.url} />
-      <TrackSteps name={props.name} />
+      <TrackInfo name={name} url={url} />
+      <TrackSteps name={name} />
     </TrackWrapper>
   );
 };
