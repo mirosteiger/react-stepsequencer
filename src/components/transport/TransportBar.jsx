@@ -9,8 +9,9 @@ import { useStore } from "../../store/zustand";
 import { Poti } from "../misc/Poti";
 import IconButton from "../misc/IconButton";
 import { useTheme } from "styled-components";
+// import { randomCase } from "../utils/randomNumber";
 
-export const TransportBar = ({ setSteps, setPlay, play }) => {
+export const TransportBar = ({ stepState, setStepState, setPlay, play }) => {
   const theme = useTheme();
   const bpm = useStore((state) => state.bpm);
   const volume = useStore((state) => state.volume);
@@ -22,15 +23,37 @@ export const TransportBar = ({ setSteps, setPlay, play }) => {
 
   const handleReset = () => {
     if (window.confirm("Wanna reset your Trackpatterns?") === true) {
-      setSteps(emptyStepState);
+      setStepState(emptyStepState);
     } else {
       return;
     }
   };
 
   const handleCompleteShuffle = () => {
-    alert("ShuffleShuffleShuffleShuffle");
+    if (window.confirm("Wanna randomize your complete Track?") === true) {
+      let randomizedPattern = { ...stepState };
+      Object.entries(stepState).forEach((sample) => {
+        console.log(randomSimple(2));
+        let sampleName = sample[0]; // 0: Samplename  --   1: PatternArray
+        randomizedPattern[sampleName] = new Array(16)
+          .fill()
+          .map(() =>
+            sampleName === "HiHat" ? randomSimple(2) : randomSimple(1)
+          );
+      });
+      setStepState(randomizedPattern);
+    } else {
+      return;
+    }
   };
+
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
+
+  function randomSimple(max) {
+    return [0, 0, 0, 0, 0, 0, 0, 0, 1, max][Math.floor(Math.random() * 10)];
+  }
 
   return (
     <TransportBarWrapper>
