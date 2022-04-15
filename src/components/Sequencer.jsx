@@ -7,17 +7,19 @@ import { TrackConfig, initialStepState } from "../data/config";
 import * as Tone from "tone";
 import StepContext from "../store/StepContext";
 
-export const Sequencer = ({ setPlay, play }) => {
-  const [stepState, setSteps] = useState(initialStepState);
+export const Sequencer = ({
+  setPlay,
+  play,
+  currentStepRef,
+  setCurrentStepState,
+}) => {
+  const [stepState, setStepState] = useState(initialStepState);
   const [buffers, setBuffers] = useState({});
-  const [currentStep, setCurrentStepState] = useState(0);
 
   const buffersRef = useRef(buffers);
   buffersRef.current = buffers;
   const stepsRef = useRef(stepState);
   stepsRef.current = stepState;
-  const currentStepRef = useRef(currentStep);
-  currentStepRef.current = currentStep;
 
   useEffect(() => {
     Tone.Transport.scheduleRepeat(function (time) {
@@ -42,9 +44,14 @@ export const Sequencer = ({ setPlay, play }) => {
 
   return (
     <>
-      <StepContext.Provider value={{ state: stepState, setSteps }}>
+      <StepContext.Provider value={{ state: stepState, setStepState }}>
         <SequencerCase>
-          <TransportBar setSteps={setSteps} play={play} setPlay={setPlay} />
+          <TransportBar
+            stepState={stepState}
+            setStepState={setStepState}
+            play={play}
+            setPlay={setPlay}
+          />
           <Main>
             <StepSequencer
               config={TrackConfig}

@@ -1,5 +1,6 @@
+import { useState, useEffect, useCallback, useRef } from "react";
 import * as Tone from "tone";
-import { useState, useEffect, useCallback } from "react";
+
 import { useStore } from "../../store/zustand";
 import { SequencerWrapper } from "../../styles/styles";
 import { Sequencer } from "../Sequencer";
@@ -8,6 +9,10 @@ export const Transport = ({ player, channel }) => {
   const bpm = useStore((state) => state.bpm);
   const swing = useStore((state) => state.swing);
   const volume = useStore((state) => state.volume);
+
+  const [currentStep, setCurrentStepState] = useState(0);
+  const currentStepRef = useRef(currentStep);
+  currentStepRef.current = currentStep;
 
   const [playing, setPlaying] = useState(false);
 
@@ -28,7 +33,7 @@ export const Transport = ({ player, channel }) => {
       });
     } else {
       Tone.Transport.stop();
-      // setCurrentStepState(0);
+      setCurrentStepState(0);
     }
     console.log(Tone.Transport.state);
   };
@@ -63,6 +68,8 @@ export const Transport = ({ player, channel }) => {
         play={playing}
         player={player}
         channel={channel}
+        currentStepRef={currentStepRef}
+        setCurrentStepState={setCurrentStepState}
       />
     </SequencerWrapper>
   );

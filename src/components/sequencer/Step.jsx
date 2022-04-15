@@ -11,7 +11,7 @@ export default React.memo(function Step({ on, index, name, doubled }) {
 
   function toggleStep(e) {
     let shiftEnabled = e.shiftKey === true;
-    context.setSteps((state) => {
+    context.setStepState((state) => {
       let steps = [...state[name]];
       let val =
         steps[index] === 0
