@@ -93,8 +93,8 @@ export const TransportBar = ({ setSteps, setPlay, play }) => {
           name={"Volume"}
           value={volume}
           setValue={setVolume}
-          min={0}
-          max={100}
+          min={-48}
+          max={0}
           stepSize={1}
           size={70}
           style={{ marginRight: "1.5em" }}

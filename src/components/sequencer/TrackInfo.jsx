@@ -18,16 +18,6 @@ export const TrackInfo = ({ name, url }) => {
   const [isMute, setMute] = useState(false);
   const [trackVolume, setTrackVolume] = useState(100);
 
-  const player = new Tone.Player(url).toDestination();
-
-  const playSample = async () => {
-    Tone.loaded()
-      .then(() => {
-        console.log(name);
-        player.start();
-      })
-      .catch((err) => console.log(err));
-  };
   return (
     <TrackItemWrapper>
       <TrackButtonWrapper>
@@ -48,7 +38,7 @@ export const TrackInfo = ({ name, url }) => {
       </TrackButtonWrapper>
 
       <SampleWrapper>
-        <SampleLabel disabled defaultValue={name} onClick={playSample}>
+        <SampleLabel disabled defaultValue={name}>
           {name}
         </SampleLabel>
       </SampleWrapper>

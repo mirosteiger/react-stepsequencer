@@ -1,52 +1,33 @@
 import React, { useEffect, useRef, useState } from "react";
 import { SequencerCase, Main } from "../styles/styles";
-import { P1 } from "../styles/styles.text";
 import { TransportBar } from "./transport/TransportBar";
 import StepSequencer from "./sequencer/StepSequencer";
 // import { Colorpalette } from "./utils/Colorpalette";
-import { useStore } from "../store/zustand";
 import { TrackConfig, initialStepState } from "../data/config";
 import * as Tone from "tone";
 import StepContext from "../store/StepContext";
-import { loadSamples } from "./utils/loadSamples";
 
-export const Sequencer = ({ setPlay, play }) => {
-  const bpm = useStore((state) => state.bpm);
-  const swing = useStore((state) => state.swing);
-  const volume = useStore((state) => state.volume);
-
+export const Sequencer = ({ setPlay, play, player }) => {
   const [stepState, setSteps] = useState(initialStepState);
-  const [buffers, setBuffers] = useState({});
   const [currentStep, setCurrentStepState] = useState(0);
 
-  const buffersRef = useRef(buffers);
-  buffersRef.current = buffers;
   const stepsRef = useRef(stepState);
   stepsRef.current = stepState;
   const currentStepRef = useRef(currentStep);
   currentStepRef.current = currentStep;
 
   useEffect(() => {
-    Tone.Transport.bpm.value = bpm;
-  }, [bpm]);
-
-  useEffect(() => {
-    Tone.Destination.volume.value = volume;
-  }, [volume]);
-
-  useEffect(() => {
-    Tone.Transport.swing = swing / 100;
-  }, [swing]);
-
-  useEffect(() => {
     Tone.Transport.scheduleRepeat((time) => {
-      Object.keys(buffersRef.current).forEach((b) => {
-        let targetStep = stepsRef.current[b][currentStepRef.current];
-        let targetBuffer = buffersRef.current[b];
+      Object.entries(TrackConfig.urls).forEach((n) => {
+        let sampleName = n[0];
 
-        console.log(targetStep);
+        let targetStep = stepsRef.current[sampleName][currentStepRef.current];
+        let targetBuffer = player.get(sampleName);
+
+        console.log(targetBuffer.name);
+
         if (targetStep === 1) {
-          targetBuffer.start(time + 0.05).stop(time + 0.25);
+          targetBuffer.start(time + 0.05);
         }
         if (targetStep === 2) {
           targetBuffer.start(time);
@@ -61,40 +42,21 @@ export const Sequencer = ({ setPlay, play }) => {
     }, "16n");
   }, [TrackConfig]);
 
-  useEffect(() => {
-    if (play) {
-      Tone.Transport.start();
-    } else {
-      Tone.Transport.stop();
-      setCurrentStepState(0);
-    }
-  }, [play]);
-
-  useEffect(() => {
-    new Tone.Players(TrackConfig.urls, () => {
-      console.log("loaded all urls");
-    }).toDestination();
-  }, []);
-
   return (
     <>
-      <React.Suspense fallback={<P1>loading...</P1>}>
-        <StepContext.Provider value={{ state: stepState, setSteps }}>
-          <SequencerCase>
-            <TransportBar setSteps={setSteps} play={play} setPlay={setPlay} />
-            <Main>
-              {/* <Tracks config={TrackConfig} /> */}
-              <StepSequencer
-                config={TrackConfig}
-                currentStep={currentStepRef.current}
-                setBuffers={setBuffers}
-                playing={play}
-              />
-            </Main>
-          </SequencerCase>
-          {/* <Colorpalette /> */}
-        </StepContext.Provider>
-      </React.Suspense>
+      <StepContext.Provider value={{ state: stepState, setSteps }}>
+        <SequencerCase>
+          <TransportBar setSteps={setSteps} play={play} setPlay={setPlay} />
+          <Main>
+            <StepSequencer
+              config={TrackConfig}
+              currentStep={currentStepRef.current}
+              playing={play}
+            />
+          </Main>
+        </SequencerCase>
+        {/* <Colorpalette /> */}
+      </StepContext.Provider>
     </>
   );
 };

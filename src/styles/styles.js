@@ -1,10 +1,15 @@
 import styled, { keyframes, css } from "styled-components/macro";
 
 export const LoadingContainer = styled.div`
-  height: 100vh;
+  position: absolute;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
+  min-height: 100vh;
+  min-width: 100vw ;
+
   background-color: ${(props) => props.theme.background};
 `;
 export const Wrapper = styled.div`
@@ -208,7 +213,7 @@ export const Spacer = styled.div`
   display: flex;
   width: 16%;
   height: 1px;
-  background-color: red ;
+  background-color: red;
 `;
 
 export const StepIndicator = styled.div`

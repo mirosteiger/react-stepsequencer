@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "immer": "^9.0.12",
     "node-sass": "^7.0.1",
+    "rc-knob": "^1.0.1",
     "react": "^18.0.0",
     "react-cache": "^2.0.0-alpha.1",
     "react-circle-slider": "^1.6.2",
