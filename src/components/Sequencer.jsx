@@ -7,30 +7,28 @@ import { TrackConfig, initialStepState } from "../data/config";
 import * as Tone from "tone";
 import StepContext from "../store/StepContext";
 
-export const Sequencer = ({ setPlay, play, player }) => {
+export const Sequencer = ({ setPlay, play }) => {
   const [stepState, setSteps] = useState(initialStepState);
+  const [buffers, setBuffers] = useState({});
   const [currentStep, setCurrentStepState] = useState(0);
 
+  const buffersRef = useRef(buffers);
+  buffersRef.current = buffers;
   const stepsRef = useRef(stepState);
   stepsRef.current = stepState;
   const currentStepRef = useRef(currentStep);
   currentStepRef.current = currentStep;
 
   useEffect(() => {
-    Tone.Transport.scheduleRepeat((time) => {
-      Object.entries(TrackConfig.urls).forEach((n) => {
-        let sampleName = n[0];
-
-        let targetStep = stepsRef.current[sampleName][currentStepRef.current];
-        let targetBuffer = player.get(sampleName);
-
-        console.log(targetBuffer.name);
+    Tone.Transport.scheduleRepeat(function (time) {
+      Object.keys(buffersRef.current).forEach((b) => {
+        let targetStep = stepsRef.current[b][currentStepRef.current];
+        let targetBuffer = buffersRef.current[b];
 
         if (targetStep === 1) {
-          targetBuffer.start(time + 0.05);
-        }
-        if (targetStep === 2) {
           targetBuffer.start(time);
+        } else if (targetStep === 2) {
+          targetBuffer.start();
           targetBuffer.start("+64n");
           targetBuffer.start("+32n");
         }
@@ -51,7 +49,9 @@ export const Sequencer = ({ setPlay, play, player }) => {
             <StepSequencer
               config={TrackConfig}
               currentStep={currentStepRef.current}
+              stepCount={stepState.Kick.length}
               playing={play}
+              setBuffers={setBuffers}
             />
           </Main>
         </SequencerCase>
