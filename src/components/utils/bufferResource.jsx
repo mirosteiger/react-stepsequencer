@@ -1,10 +1,15 @@
 import * as Tone from "tone";
+import memoize from "lodash.memoize";
 
-export const bufferResource = (url) => {
-  new Promise(resolve => {
-    const buffer = new Tone.Player(url, () => {
+const bufferResource = (url) => {
+  let buffer;
+  new Promise((resolve) => {
+    buffer = new Tone.ToneAudioBuffer({ url: url }, () => {
+      console.log("sample loaded");
       resolve(buffer);
-      buffer.start()
-    }).toDestination()
-  })
+    });
+  });
+  return buffer;
 };
+
+export default memoize(bufferResource);
